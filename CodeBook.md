@@ -1,6 +1,3 @@
-# Initial paratemeters in the original data
-## scripts of Getting and Cleaning Data Course Project
-
 ## Step 1 : read the date from the original files and merges the training and the test sets to create one data set.
     features = data frame with names of each column of data in data_train and data_test
     activity_labels = the 6 labels of activity - mapping between number and name
@@ -29,5 +26,5 @@
     no new measures, just factorizing activity label
 
 ## Step 5 : From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-   tidy_data.csv = output of the script, the tidy data file
+    tidy_data.csv = output of the script, the tidy data file
     
