@@ -5,7 +5,7 @@
   #read data from the needed files, for description of the parameters, cfr the code book
     features <- read.table("./UCI HAR Dataset/features.txt", as.is=TRUE)
     activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt", as.is=TRUE)
-    
+
     data_train <- read.table("./UCI HAR Dataset/train/X_train.txt", as.is=TRUE)
     labels_train <- read.table("./UCI HAR Dataset/train/y_train.txt", as.is=TRUE)
     subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt", as.is=TRUE)
@@ -35,14 +35,14 @@
     colname_intermediate <- c("mean_subject", "mean_activity_label", features$V2)
     colnames(test_train_subj_label_data) <- colname_intermediate
   
-  # check which column names have either "mean" or "dev" in the name and subset the dataframe to those
-    test_train_mean_dev_columns <- colname_intermediate[which(grepl("(mean)|(std)", colnames(test_train_subj_label_data)))]
-    test_train_subj_label_data_mean_dev <- test_train_subj_label_data[ , test_train_mean_dev_columns]
+  # check which column names have either "mean" or "std" in the name and subset the dataframe to those
+    test_train_mean_std_columns <- colname_intermediate[which(grepl("(mean)|(std)", colnames(test_train_subj_label_data)))]
+    test_train_subj_label_data_mean_std <- test_train_subj_label_data[ , test_train_mean_std_columns]
 
 ## Step 4 : Appropriately labels the data set with descriptive variable names.
   #I take this first to stop the labelling on the "mean" hack
     
-    colname <- colnames(test_train_subj_label_data_mean_dev)
+    colname <- colnames(test_train_subj_label_data_mean_std)
     
     #revert the "mean"-hack in the first columns  
     colname <- gsub("mean_subject", "subject", colname)
@@ -58,20 +58,18 @@
     #Assuming BodyBody is supposed to be Body in the last cases
     colname <- gsub("BodyBody", "Body", colname)    
     
-    colnames(test_train_subj_label_data_mean_dev) <- colname
+    colnames(test_train_subj_label_data_mean_std) <- colname
   
     
 ## Step 3 : Uses descriptive activity names to name the activities in the data set
   # extract the original column
-    test_train_subj_label_data_mean_dev$activityLabel <- factor(
-      test_train_subj_label_data_mean_dev$activityLabel,
+    test_train_subj_label_data_mean_std$activityLabel <- factor(
+      test_train_subj_label_data_mean_std$activityLabel,
       levels = activity_labels$V1,
       labels = activity_labels$V2
     )
-    
-    test_train_subj_label_data_mean_dev$activityLabel
 
 ## Step 5 : From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
   # create .csv file from tidy data
-    write.table(test_train_subj_label_data_mean_dev, "tidy_data.csv", row.names=FALSE, sep = ", ", quote=FALSE)
+    write.table(test_train_subj_label_data_mean_std, "tidy_data.csv", row.names=FALSE, sep = ", ", quote=FALSE)
     
