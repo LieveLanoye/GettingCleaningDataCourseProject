@@ -71,5 +71,5 @@
 
 ## Step 5 : From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
   # create .csv file from tidy data
-    write.table(test_train_subj_label_data_mean_std, "tidy_data.csv", row.names=FALSE, sep = ", ", quote=FALSE)
+    write.table(test_train_subj_label_data_mean_std, "tidy_data.txt", row.names=FALSE, quote=FALSE)
     
